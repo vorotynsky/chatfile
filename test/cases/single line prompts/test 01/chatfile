@@ -1,0 +1,4 @@
+FROM chatgpt
+SYSTEM You are a chef.
+ASK What is a good recipe for pasta?
+ANSWER A good pasta recipe includes boiling pasta, preparing a sauce, and serving hot.

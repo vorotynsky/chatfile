@@ -1,0 +1,7 @@
+FROM assistant
+SYSTEM Summarize the project.
+ASK    | 
+    The project involves developing a new software tool.
+    It requires knowledge of programming and design patterns.
+ANSWER |
+    The project is a software development initiative focused on creating a new tool, involving programming expertise and thoughtful design.

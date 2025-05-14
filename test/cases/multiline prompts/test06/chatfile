@@ -1,0 +1,6 @@
+FROM assistant
+SYSTEM What's the largest planet in our solar system?
+ASK Tell me about Jupiter.
+ANSWER | 
+    Jupiter is the largest planet in our solar system, a gas giant mainly composed of hydrogen and helium.
+

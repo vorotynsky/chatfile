@@ -1,0 +1,13 @@
+# This is a comment line, should be ignored or handled gracefully.
+
+FROM   chatgpt
+SYSTEM    Describe the solar system.
+ASK    |
+        The solar system includes the sun, planets, moons, and other celestial bodies.
+ANSWER |
+    Our solar system consists of the sun,
+    
+    eight planets, moons, asteroids, and comets.
+
+# This is a comment line, should be ignored or handled gracefully.
+    ASK How many moons in the solar system?

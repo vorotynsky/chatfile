@@ -1,0 +1,9 @@
+FROM model
+SYSTEM Explain quantum computing.
+ASK    |
+    Quantum computing leverages
+        quantum bits or qubits.
+    It performs complex calculations at unprecedented speeds.
+ANSWER |
+    Quantum computing uses qubits to process information
+    in ways classical computers cannot, enabling powerful computational capabilities.

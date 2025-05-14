@@ -1,0 +1,5 @@
+FROM chatgpt
+SYSTEM Define a binary search algorithm.
+ASK How does binary search work?
+ANSWER A binary search repeatedly divides a sorted list in half to locate a target value efficiently.
+

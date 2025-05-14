@@ -1,0 +1,5 @@
+FROM chatgpt
+SYSTEM Describe the solar system.
+ASK How many planets are there?
+ANSWER | There are 8 planets.
+ASK Where do you live?

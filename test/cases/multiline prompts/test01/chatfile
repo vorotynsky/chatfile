@@ -1,0 +1,7 @@
+FROM chatgpt
+SYSTEM You are an assistant.
+ASK Provide a brief history of AI.
+ANSWER |
+    Artificial Intelligence (AI) is a branch of computer science
+    dedicated to creating systems capable of performing tasks
+    that typically require human intelligence.

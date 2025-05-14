@@ -1,0 +1,7 @@
+FROM openai
+SYSTEM Generate a poem.
+ASK Write a haiku about nature.
+ANSWER |
+    Leaves fall silently
+    Nature whispers softly now
+    Autumn's breath echoes

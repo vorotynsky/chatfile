@@ -1,0 +1,5 @@
+FROM chatgpt
+SYSTEM Describe the internet.
+ASK How does the internet work?
+ANSWER
+The internet is a global network that connects computers worldwide.

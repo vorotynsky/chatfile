@@ -1,0 +1,7 @@
+FROM chatgpt
+SYSTEM Describe the water cycle.
+ASK How does the water cycle operate?
+ANSWER |
+    The water cycle describes how water evaporates,
+    condenses into clouds, and falls as precipitation,
+    eventually returning to bodies of water.

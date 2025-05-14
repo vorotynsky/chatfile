@@ -1,0 +1,3 @@
+FROM assistant
+ASK What is photosynthesis?
+ANSWER Photosynthesis is the process by which green plants and some organisms use sunlight to synthesize foods from carbon dioxide and water.

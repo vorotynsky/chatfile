@@ -1,0 +1,8 @@
+FROM  chatgpt   
+
+SYSTEM   What are the benefits of renewable energy?   
+
+ASK    |   
+    Renewable energy sources include solar, wind, hydro, and geothermal.   
+ANSWER |   
+    They help reduce greenhouse gases, create jobs, and provide sustainable power.   
