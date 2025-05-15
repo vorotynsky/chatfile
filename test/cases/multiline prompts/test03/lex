@@ -1,0 +1,11 @@
+{FROM FROM 1 1}
+{MODEL assistant 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Summarize the project. 2 8}
+{ASK ASK 3 1}
+{PROMPT The project involves developing a new software tool.
+It requires knowledge of programming and design patterns. 3 8}
+{ANSWER ANSWER 6 1}
+{PROMPT The project is a software development initiative focused on creating a new tool, involving programming expertise and thoughtful design. 6 8}
+
+{<EOF>  8 1}

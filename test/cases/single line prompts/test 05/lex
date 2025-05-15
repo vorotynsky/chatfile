@@ -1,0 +1,6 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{ASK ASK 2 1}
+{PROMPT What is machine learning? 2 5}
+
+{<EOF>  3 1}

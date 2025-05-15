@@ -1,0 +1,4 @@
+{FROM FROM 1 1}
+
+lexer: model name must be on the same line as FROM
+{<UNKNOWN>  2 1}

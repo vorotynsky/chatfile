@@ -1,0 +1,13 @@
+{FROM FROM 1 1}
+{MODEL model 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Explain quantum computing. 2 8}
+{ASK ASK 3 1}
+{PROMPT Quantum computing leverages
+    quantum bits or qubits.
+It performs complex calculations at unprecedented speeds. 3 8}
+{ANSWER ANSWER 7 1}
+{PROMPT Quantum computing uses qubits to process information
+in ways classical computers cannot, enabling powerful computational capabilities. 7 8}
+
+{<EOF>  10 1}

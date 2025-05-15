@@ -1,0 +1,10 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Describe the internet. 2 8}
+{ASK ASK 3 1}
+{PROMPT How does the internet work? 3 5}
+{ANSWER ANSWER 4 1}
+
+lexer: prompt must be on the same line as SYSTEM/ASK/ANSWER
+{<UNKNOWN>  5 1}

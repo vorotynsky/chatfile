@@ -1,0 +1,4 @@
+{SYSTEM SYSTEM 1 1}
+
+lexer: prompt must be on the same line as SYSTEM/ASK/ANSWER
+{<UNKNOWN>  2 1}

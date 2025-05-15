@@ -1,0 +1,10 @@
+{FROM FROM 1 1}
+{MODEL assistant 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT What's the largest planet in our solar system? 2 8}
+{ASK ASK 3 1}
+{PROMPT Tell me about Jupiter. 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT Jupiter is the largest planet in our solar system, a gas giant mainly composed of hydrogen and helium. 4 8}
+
+{<EOF>  7 1}

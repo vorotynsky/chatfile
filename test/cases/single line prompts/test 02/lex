@@ -1,0 +1,10 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Define a binary search algorithm. 2 8}
+{ASK ASK 3 1}
+{PROMPT How does binary search work? 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT A binary search repeatedly divides a sorted list in half to locate a target value efficiently. 4 8}
+
+{<EOF>  6 1}

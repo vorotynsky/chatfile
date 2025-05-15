@@ -1,0 +1,10 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT You are a chef. 2 8}
+{ASK ASK 3 1}
+{PROMPT What is a good recipe for pasta? 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT A good pasta recipe includes boiling pasta, preparing a sauce, and serving hot. 4 8}
+
+{<EOF>  5 1}

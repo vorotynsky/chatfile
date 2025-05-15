@@ -1,0 +1,8 @@
+{FROM FROM 1 1}
+{MODEL assistant 1 6}
+{ASK ASK 2 1}
+{PROMPT What is photosynthesis? 2 5}
+{ANSWER ANSWER 3 1}
+{PROMPT Photosynthesis is the process by which green plants and some organisms use sunlight to synthesize foods from carbon dioxide and water. 3 8}
+
+{<EOF>  4 1}

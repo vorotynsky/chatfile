@@ -1,0 +1,12 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Describe the solar system. 2 8}
+{ASK ASK 3 1}
+{PROMPT How many planets are there? 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT | There are 8 planets. 4 8}
+{ASK ASK 5 1}
+{PROMPT Where do you live? 5 5}
+
+{<EOF>  6 1}

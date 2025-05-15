@@ -1,0 +1,12 @@
+{FROM FROM 1 1}
+{MODEL chatgpt 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT You are an assistant. 2 8}
+{ASK ASK 3 1}
+{PROMPT Provide a brief history of AI. 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT Artificial Intelligence (AI) is a branch of computer science
+dedicated to creating systems capable of performing tasks
+that typically require human intelligence. 4 8}
+
+{<EOF>  8 1}

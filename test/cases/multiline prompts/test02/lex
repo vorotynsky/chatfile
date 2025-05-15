@@ -1,0 +1,12 @@
+{FROM FROM 1 1}
+{MODEL openai 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Generate a poem. 2 8}
+{ASK ASK 3 1}
+{PROMPT Write a haiku about nature. 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT Leaves fall silently
+Nature whispers softly now
+Autumn's breath echoes 4 8}
+
+{<EOF>  8 1}

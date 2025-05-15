@@ -1,0 +1,10 @@
+{FROM FROM 1 1}
+{MODEL model 1 6}
+{SYSTEM SYSTEM 2 1}
+{PROMPT Explain blockchain technology. 2 8}
+{ASK ASK 3 1}
+{PROMPT What is blockchain? 3 5}
+{ANSWER ANSWER 4 1}
+{PROMPT Blockchain is a distributed ledger technology that records transactions across multiple computers so that the record cannot be altered retroactively. 4 8}
+
+{<EOF>  6 1}
