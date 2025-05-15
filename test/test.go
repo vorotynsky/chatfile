@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"io"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -46,13 +47,21 @@ func DoTest(t *testing.T, validation string, test TestFunc) {
 	base = filepath.Dir(base)
 	base = filepath.Join(base, "cases")
 
+	skipped := make(map[string]bool)
+	skipped["."] = false
+
 	err := filepath.WalkDir(base, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			t.Errorf("Failed to access %s: %v", path, err)
 			return err
 		}
 
-		if d.IsDir() || d.Name() != "chatfile" {
+		if d.IsDir() {
+			checkIgnore(skipped, path, base)
+			return nil
+		}
+
+		if d.Name() != "chatfile" {
 			return nil
 		}
 
@@ -69,6 +78,13 @@ func DoTest(t *testing.T, validation string, test TestFunc) {
 		}
 
 		t.Run(testName, func(t *testing.T) {
+			if skip, ok := skipped[testRelDir]; ok {
+				if skip {
+					t.SkipNow()
+				}
+				delete(skipped, testRelDir)
+			}
+
 			chatFile, err := os.Open(path)
 			failNowWithError(t, "Failed to open chatfile %v", err)
 			defer closeInTest(t, chatFile)
@@ -82,19 +98,20 @@ func DoTest(t *testing.T, validation string, test TestFunc) {
 
 			test(t, chatFile, outBuffer)
 
+			bytes := outBuffer.Bytes()
 			if !fileCompare(validationFile, outBuffer) {
 				t.Fail()
 				t.Errorf("Test case %s failed, output doesn't match validation", testRelDir)
 
 				failedOutputPath := validationFilePath + ".failed"
-				t.Errorf("Writing output to %s", validationFilePath)
+				t.Errorf("Writing output to %s", failedOutputPath)
 
-				err = os.WriteFile(failedOutputPath, outBuffer.Bytes(), 0666)
+				err = os.WriteFile(failedOutputPath, bytes, 0666)
 				failNowWithError(t, "Failed to write output: %v", err)
 			}
 		})
 
-		return nil
+		return fs.SkipDir
 	})
 
 	if err != nil {
@@ -103,16 +120,43 @@ func DoTest(t *testing.T, validation string, test TestFunc) {
 	}
 }
 
+func checkIgnore(checked map[string]bool, path string, base string) {
+	rel, _ := filepath.Rel(base, path)
+	ignored := false
+
+	dir := rel
+	for dir != "." {
+		if v, ok := checked[dir]; ok {
+			ignored = v
+			break
+		}
+
+		dir = filepath.Dir(dir)
+	}
+
+	name := "TEST_IGNORE"
+	if ignored {
+		name = "TEST_UNIGNORE"
+	}
+
+	ignoreFile := filepath.Join(path, name)
+	if _, err := os.Stat(ignoreFile); err == nil {
+		ignored = !ignored
+	}
+
+	checked[rel] = ignored
+}
+
 func checkValidationFile(t *testing.T, validationFilePath string) (int, bool) {
 	stat, err := os.Stat(validationFilePath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return -1, true
+			return -1, false
 		} else {
 			t.Errorf("Unknown error occured: %v", err)
 		}
 	}
-	return int(stat.Size()), false
+	return int(stat.Size()), true
 }
 
 func failNowWithError(t *testing.T, format string, err error) {
