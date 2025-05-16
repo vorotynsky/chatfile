@@ -10,7 +10,7 @@ import (
 
 func main() {
 	var args struct {
-		File string `arg:"positional, required, help: open a specified file as a chatfile"`
+		File string `arg:"positional, required, help:open a specified file as a chatfile"`
 	}
 	arg.MustParse(&args)
 
@@ -21,14 +21,21 @@ func main() {
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
+	dumpLexer(file)
+}
 
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+func dumpLexer(file *os.File) {
+	reader := bufio.NewReader(file)
+	lexer := NewLexer(reader)
+
+	out := os.Stdout
+
+	for lexer.MoveNext() {
+		_, _ = fmt.Fprintf(out, "%v\n", lexer.Current())
 	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading file:", err)
-		os.Exit(1)
+	fmt.Fprintln(out)
+	if lexer.Err() != nil {
+		_, _ = fmt.Fprintf(out, "%v\n", lexer.Err())
 	}
+	_, _ = fmt.Fprintf(out, "%v\n", lexer.Current())
 }
