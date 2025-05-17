@@ -21,21 +21,19 @@ func main() {
 	}
 	defer file.Close()
 
-	dumpLexer(file)
+	dump(file)
 }
 
-func dumpLexer(file *os.File) {
+func dump(file *os.File) {
 	reader := bufio.NewReader(file)
 	lexer := NewLexer(reader)
+	scanner := NewParseScanner(lexer)
 
-	out := os.Stdout
+	for scanner.Scan() {
+		command := scanner.Command()
+		fmt.Printf("%s: %v\n", command.Name(), command)
+	}
 
-	for lexer.MoveNext() {
-		_, _ = fmt.Fprintf(out, "%v\n", lexer.Current())
-	}
-	fmt.Fprintln(out)
-	if lexer.Err() != nil {
-		_, _ = fmt.Fprintf(out, "%v\n", lexer.Err())
-	}
-	_, _ = fmt.Fprintf(out, "%v\n", lexer.Current())
+	fmt.Println()
+	fmt.Println(scanner.Err())
 }
