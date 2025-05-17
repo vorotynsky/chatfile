@@ -1,0 +1,4 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM Define a binary search algorithm.}
+PROMPT: &{USER How does binary search work?}
+PROMPT: &{ASSISTANT A binary search repeatedly divides a sorted list in half to locate a target value efficiently.}

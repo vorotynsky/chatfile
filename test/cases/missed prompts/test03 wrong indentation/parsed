@@ -1,0 +1,6 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM Describe the internet.}
+PROMPT: &{USER How does the internet work?}
+
+lexer: prompt must be on the same line as SYSTEM/ASK/ANSWER
+{<UNKNOWN>  5 1}

@@ -1,0 +1,7 @@
+FROM: &{model}
+PROMPT: &{SYSTEM Explain quantum computing.}
+PROMPT: &{USER Quantum computing leverages
+    quantum bits or qubits.
+It performs complex calculations at unprecedented speeds.}
+PROMPT: &{ASSISTANT Quantum computing uses qubits to process information
+in ways classical computers cannot, enabling powerful computational capabilities.}

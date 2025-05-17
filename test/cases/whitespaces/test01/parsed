@@ -1,0 +1,4 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM What are the benefits of renewable energy?}
+PROMPT: &{USER Renewable energy sources include solar, wind, hydro, and geothermal.}
+PROMPT: &{ASSISTANT They help reduce greenhouse gases, create jobs, and provide sustainable power.}

@@ -1,0 +1,5 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM Describe the solar system.}
+PROMPT: &{USER How many planets are there?}
+PROMPT: &{ASSISTANT | There are 8 planets.}
+PROMPT: &{USER Where do you live?}

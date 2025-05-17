@@ -1,0 +1,2 @@
+FROM: &{chatgpt}
+PROMPT: &{USER What is machine learning?}

@@ -1,0 +1,4 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM You are a chef.}
+PROMPT: &{USER What is a good recipe for pasta?}
+PROMPT: &{ASSISTANT A good pasta recipe includes boiling pasta, preparing a sauce, and serving hot.}

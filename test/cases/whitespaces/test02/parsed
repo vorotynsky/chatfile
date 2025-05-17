@@ -1,0 +1,7 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM Describe the solar system.}
+PROMPT: &{USER     The solar system includes the sun, planets, moons, and other celestial bodies.}
+PROMPT: &{ASSISTANT Our solar system consists of the sun,
+
+eight planets, moons, asteroids, and comets.}
+PROMPT: &{USER How many moons in the solar system?}

@@ -1,0 +1,4 @@
+FROM: &{assistant}
+PROMPT: &{SYSTEM What's the largest planet in our solar system?}
+PROMPT: &{USER Tell me about Jupiter.}
+PROMPT: &{ASSISTANT Jupiter is the largest planet in our solar system, a gas giant mainly composed of hydrogen and helium.}

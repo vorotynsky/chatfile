@@ -1,0 +1,6 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM Describe the water cycle.}
+PROMPT: &{USER How does the water cycle operate?}
+PROMPT: &{ASSISTANT The water cycle describes how water evaporates,
+condenses into clouds, and falls as precipitation,
+eventually returning to bodies of water.}

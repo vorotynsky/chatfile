@@ -1,0 +1,6 @@
+FROM: &{chatgpt}
+PROMPT: &{SYSTEM You are an assistant.}
+PROMPT: &{USER Provide a brief history of AI.}
+PROMPT: &{ASSISTANT Artificial Intelligence (AI) is a branch of computer science
+dedicated to creating systems capable of performing tasks
+that typically require human intelligence.}
