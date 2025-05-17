@@ -1,0 +1,3 @@
+[chatgpt] SYSTEM: Define a binary search algorithm.
+[chatgpt] USER: How does binary search work?
+[chatgpt] ASSISTANT: A binary search repeatedly divides a sorted list in half to locate a target value efficiently.

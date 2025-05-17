@@ -1,0 +1,3 @@
+[model] SYSTEM: Explain blockchain technology.
+[model] USER: What is blockchain?
+[model] ASSISTANT: Blockchain is a distributed ledger technology that records transactions across multiple computers so that the record cannot be altered retroactively.
