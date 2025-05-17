@@ -2,11 +2,20 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
-	"os"
-
 	"github.com/alexflint/go-arg"
+	"io"
+	"os"
 )
+
+type WriterHistory struct {
+	writer io.Writer
+}
+
+func (w *WriterHistory) Append(role Role, message string) {
+	_, _ = fmt.Fprintf(w.writer, "%s: %s\n", role, message)
+}
 
 func main() {
 	var args struct {
@@ -24,16 +33,21 @@ func main() {
 	dump(file)
 }
 
-func dump(file *os.File) {
+func dump(file io.Reader) {
+	buffer := &bytes.Buffer{}
+	history := &WriterHistory{writer: buffer}
+
+	context := &Context{History: history}
+
 	reader := bufio.NewReader(file)
 	lexer := NewLexer(reader)
 	scanner := NewParseScanner(lexer)
 
 	for scanner.Scan() {
 		command := scanner.Command()
-		fmt.Printf("%s: %v\n", command.Name(), command)
+		command.Apply(context)
 	}
 
-	fmt.Println()
-	fmt.Println(scanner.Err())
+	fmt.Printf("Model: %s\n", context.CurrentModel)
+	_, _ = buffer.WriteTo(os.Stdout)
 }
