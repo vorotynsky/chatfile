@@ -1,4 +1,4 @@
-module chatfile
+module github.com/vorotynsky/chatfile
 
 go 1.23.8
 

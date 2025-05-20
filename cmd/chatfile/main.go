@@ -8,6 +8,8 @@ import (
 	"github.com/alexflint/go-arg"
 	"github.com/openai/openai-go"
 	"github.com/openai/openai-go/option"
+
+	chatfile "github.com/vorotynsky/chatfile/lib"
 )
 
 func main() {
@@ -27,8 +29,8 @@ func main() {
 	}
 	defer file.Close()
 
-	history := OpenAiHistory{}
-	context := &Context{History: &history}
+	history := chatfile.OpenAiHistory{}
+	context := &chatfile.Context{History: &history}
 
 	err = processFile(file, context)
 	if err != nil {
@@ -38,17 +40,17 @@ func main() {
 
 	client := createClient(args.APIKey, args.BaseUrl, args.Project)
 
-	err = Send(client, context.CurrentModel, history, os.Stdout)
+	err = chatfile.Send(client, context.CurrentModel, history, os.Stdout)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Error sending request:", err)
 		os.Exit(1)
 	}
 }
 
-func processFile(file *os.File, context *Context) error {
+func processFile(file *os.File, context *chatfile.Context) error {
 	reader := bufio.NewReader(file)
-	lexer := NewLexer(reader)
-	scanner := NewParseScanner(lexer)
+	lexer := chatfile.NewLexer(reader)
+	scanner := chatfile.NewParseScanner(lexer)
 
 	for scanner.Scan() {
 		command := scanner.Command()
