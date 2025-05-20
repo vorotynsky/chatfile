@@ -1,4 +1,4 @@
-package main
+package chatfile
 
 type CommandName string
 

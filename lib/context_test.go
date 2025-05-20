@@ -1,12 +1,13 @@
-package main
+package chatfile
 
 import (
 	"bufio"
-	"chatfile/test"
 	"fmt"
 	"io"
 	"strings"
 	"testing"
+
+	"github.com/vorotynsky/chatfile/test"
 )
 
 type TestHistory struct {

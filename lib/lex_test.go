@@ -1,11 +1,12 @@
-package main
+package chatfile
 
 import (
 	"bufio"
-	"chatfile/test"
 	"fmt"
 	"io"
 	"testing"
+
+	"github.com/vorotynsky/chatfile/test"
 )
 
 func TestLexer(t *testing.T) {

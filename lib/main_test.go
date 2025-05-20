@@ -1,9 +1,10 @@
-package main
+package chatfile
 
 import (
-	"chatfile/test"
 	"io"
 	"testing"
+
+	"github.com/vorotynsky/chatfile/test"
 )
 
 func TestDummy(t *testing.T) {
