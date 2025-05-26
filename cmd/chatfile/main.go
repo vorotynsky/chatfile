@@ -17,8 +17,11 @@ func main() {
 		File string `arg:"positional, required, help:open a specified file as a chatfile"`
 
 		APIKey  string `arg:"env:OPENAI_API_KEY,--openai-api-key,required" placeholder:"KEY" help:"OpenAI API key"`
-		BaseUrl string `arg:"env:OPENAI_BASE_URL,--openai-url" placeholder:"URL" help:"OpenAI API base path"`
+		BaseUrl string `arg:"env:OPENAI_BASE_URL,--openai-url" placeholder:"URL" help:"Custom OpenAI API endpoint URL"`
 		Project string `arg:"env:OPENAI_PROJECT_ID,--openai-proj" placeholder:"PROJ" help:"OpenAI project identifier"`
+
+		Temperature *float64 `arg:"--temperature" placeholder:"TEMP" help:"Temperature for the model (this option may be removed)"`
+		Seed        *int64   `arg:"--seed" placeholder:"SEED" help:"Random seed for reproducible model outputs (this option may be removed)"`
 	}
 	arg.MustParse(&args)
 
@@ -40,7 +43,8 @@ func main() {
 
 	client := createClient(args.APIKey, args.BaseUrl, args.Project)
 
-	err = chatfile.Send(client, context.CurrentModel, history, os.Stdout)
+	parameters := chatfile.NewParameters(args.Seed, args.Temperature)
+	err = chatfile.Send(client, context.CurrentModel, history, os.Stdout, parameters)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Error sending request:", err)
 		os.Exit(1)
