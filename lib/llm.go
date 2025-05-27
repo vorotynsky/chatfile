@@ -24,6 +24,10 @@ func (h *OpenAiHistory) Append(role Role, message string) {
 	}
 }
 
+func (h *OpenAiHistory) PrependHistory(header OpenAiHistory) {
+	h.messages = append(header.messages, h.messages...)
+}
+
 type RequestParams struct {
 	Seed        param.Opt[int64]
 	Temperature param.Opt[float64]

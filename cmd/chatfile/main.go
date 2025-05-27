@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 
@@ -22,6 +23,8 @@ func main() {
 
 		Temperature *float64 `arg:"--temperature" placeholder:"TEMP" help:"Temperature for the model (this option may be removed)"`
 		Seed        *int64   `arg:"--seed" placeholder:"SEED" help:"Random seed for reproducible model outputs (this option may be removed)"`
+
+		ModelFiles map[string]string `arg:"--load-as-model,separate" placeholder:"MODEL=CHATFILE" help:"Load a file as a model with the specified name. The file will be read and parsed as a chatfile. The model name can be used in subsequent commands (such as FROM) to refer to the loaded model (this option may be removed)"`
 	}
 	arg.MustParse(&args)
 
@@ -40,6 +43,8 @@ func main() {
 		fmt.Fprintln(os.Stderr, "Error processing file:", err)
 		os.Exit(1)
 	}
+
+	substituteModelFiles(args.ModelFiles, context)
 
 	client := createClient(args.APIKey, args.BaseUrl, args.Project)
 
@@ -78,4 +83,45 @@ func createClient(apiKey string, baseUrl string, project string) openai.Client {
 
 	client := openai.NewClient(options...)
 	return client
+}
+
+func substituteModelFiles(modelFiles map[string]string, context *chatfile.Context) {
+	processedModels := make(map[string]bool)
+
+	history := context.History.(*chatfile.OpenAiHistory)
+
+	for {
+		currentModel := string(context.CurrentModel)
+
+		modelFilePath, found := modelFiles[currentModel]
+		if !found {
+			break
+		}
+
+		if processedModels[currentModel] {
+			fmt.Fprintf(os.Stderr, "Error: Circular reference detected in model '%s'\n", currentModel)
+			os.Exit(1)
+		}
+
+		processedModels[currentModel] = true
+
+		modelFile, err := os.Open(modelFilePath)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error opening model file:", err)
+			os.Exit(1)
+		}
+
+		parentHistory := chatfile.OpenAiHistory{}
+		parentContext := &chatfile.Context{History: &parentHistory}
+		err = processFile(modelFile, parentContext)
+		err = errors.Join(err, modelFile.Close())
+
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error processing model file %s: %v\n", modelFilePath, err)
+			os.Exit(1)
+		}
+
+		history.PrependHistory(parentHistory)
+		context.CurrentModel = parentContext.CurrentModel
+	}
 }
