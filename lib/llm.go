@@ -24,7 +24,7 @@ func (h *OpenAiHistory) Append(role Role, message string) {
 	}
 }
 
-func (h *OpenAiHistory) Prepend(header OpenAiHistory) {
+func (h *OpenAiHistory) PrependHistory(header OpenAiHistory) {
 	h.messages = append(header.messages, h.messages...)
 }
 

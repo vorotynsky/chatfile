@@ -121,7 +121,7 @@ func substituteModelFiles(modelFiles map[string]string, context *chatfile.Contex
 			os.Exit(1)
 		}
 
-		history.Prepend(parentHistory)
+		history.PrependHistory(parentHistory)
 		context.CurrentModel = parentContext.CurrentModel
 	}
 }
