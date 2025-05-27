@@ -3,10 +3,10 @@ package chatfile
 import (
 	"context"
 	"errors"
-	"github.com/openai/openai-go/packages/param"
 	"io"
 
 	"github.com/openai/openai-go"
+	"github.com/openai/openai-go/packages/param"
 )
 
 type OpenAiHistory struct {
