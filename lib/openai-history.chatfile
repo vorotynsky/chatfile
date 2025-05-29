@@ -1,0 +1,17 @@
+FROM coder
+
+ASK |
+    Use following functions are defined in library "github.com/openai/openai-go"
+    package openai
+    func SystemMessage(content String) ChatCompletionMessageParamUnion
+    func UserMessage(content String) ChatCompletionMessageParamUnion
+    func AssistantMessage(content String) ChatCompletionMessageParamUnion
+
+    Following members are ALREADY DEFINED in the project:
+    - `RoleSystem`, `RoleUser`, `RoleAssistant` of type `Role`
+
+ASK |
+    Implement a `OpenAiHistory` structure with following methods:
+    - `OpenAiHistory.Append(Role, string)` to append a message.
+    - `OpenAiHistory.PrependHistory(OpenAiHistory)` to prepend messages from other history object.
+    - `OpenAiHistory.Messages() ...` returns an array of openai chat messages.

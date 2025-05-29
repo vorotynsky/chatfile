@@ -17,3 +17,6 @@ go.work.sum
 
 # env file
 .env
+
+# AI generated files
+*.ai.go

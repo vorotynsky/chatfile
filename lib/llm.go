@@ -9,25 +9,6 @@ import (
 	"github.com/openai/openai-go/packages/param"
 )
 
-type OpenAiHistory struct {
-	messages []openai.ChatCompletionMessageParamUnion
-}
-
-func (h *OpenAiHistory) Append(role Role, message string) {
-	switch role {
-	case RoleSystem:
-		h.messages = append(h.messages, openai.SystemMessage(message))
-	case RoleUser:
-		h.messages = append(h.messages, openai.UserMessage(message))
-	case RoleAssistant:
-		h.messages = append(h.messages, openai.AssistantMessage(message))
-	}
-}
-
-func (h *OpenAiHistory) PrependHistory(header OpenAiHistory) {
-	h.messages = append(header.messages, h.messages...)
-}
-
 type RequestParams struct {
 	Seed        param.Opt[int64]
 	Temperature param.Opt[float64]
@@ -48,7 +29,7 @@ func toOpt[T comparable](temperature *T) param.Opt[T] {
 func Send(client openai.Client, model ModelName, history OpenAiHistory, writer io.StringWriter, params RequestParams) (err error) {
 	stream := client.Chat.Completions.NewStreaming(context.Background(), openai.ChatCompletionNewParams{
 		Model:       string(model),
-		Messages:    history.messages,
+		Messages:    history.Messages(),
 		Temperature: params.Temperature,
 		Seed:        params.Seed,
 	})
