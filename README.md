@@ -38,7 +38,7 @@ ASK What is Cauchy's functional equation?
 Call the tool to execute your chatfile and get a response with this command:
 
 ```shell
-chatfile ./chatfile
+chatfile run ./chatfile
 ```
 
 ---
