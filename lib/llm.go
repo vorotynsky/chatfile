@@ -5,23 +5,26 @@ import (
 	"errors"
 	"io"
 
-	"github.com/openai/openai-go"
-	"github.com/openai/openai-go/packages/param"
+	"github.com/sashabaranov/go-openai"
 )
 
 type OpenAiHistory struct {
-	messages []openai.ChatCompletionMessageParamUnion
+	messages []openai.ChatCompletionMessage
 }
 
 func (h *OpenAiHistory) Append(role Role, message string) {
+	var apiRole string
+
 	switch role {
 	case RoleSystem:
-		h.messages = append(h.messages, openai.SystemMessage(message))
+		apiRole = openai.ChatMessageRoleSystem
 	case RoleUser:
-		h.messages = append(h.messages, openai.UserMessage(message))
+		apiRole = openai.ChatMessageRoleUser
 	case RoleAssistant:
-		h.messages = append(h.messages, openai.AssistantMessage(message))
+		apiRole = openai.ChatMessageRoleAssistant
 	}
+
+	h.messages = append(h.messages, openai.ChatCompletionMessage{Role: apiRole, Content: message})
 }
 
 func (h *OpenAiHistory) PrependHistory(header OpenAiHistory) {
@@ -29,42 +32,48 @@ func (h *OpenAiHistory) PrependHistory(header OpenAiHistory) {
 }
 
 type RequestParams struct {
-	Seed        param.Opt[int64]
-	Temperature param.Opt[float64]
-}
-
-func NewParameters(seed *int64, temperature *float64) RequestParams {
-	return RequestParams{toOpt(seed), toOpt(temperature)}
-}
-
-func toOpt[T comparable](temperature *T) param.Opt[T] {
-	if temperature != nil {
-		return param.NewOpt(*temperature)
-	}
-	return param.NullOpt[T]()
+	Seed        *int
+	Temperature float32
 }
 
 // Send a streaming request and write the response content to the provided writer in chunks as they arrive.
-func Send(client openai.Client, model ModelName, history OpenAiHistory, writer io.StringWriter, params RequestParams) (err error) {
-	stream := client.Chat.Completions.NewStreaming(context.Background(), openai.ChatCompletionNewParams{
-		Model:       string(model),
-		Messages:    history.messages,
-		Temperature: params.Temperature,
-		Seed:        params.Seed,
-	})
+func Send(client *openai.Client, model ModelName, history OpenAiHistory, writer io.StringWriter, params RequestParams) (err error) {
+	stream, err := client.CreateChatCompletionStream(
+		context.Background(),
+		openai.ChatCompletionRequest{
+			Model:       string(model),
+			Messages:    history.messages,
+			Temperature: params.Temperature,
+			Seed:        params.Seed,
+		},
+	)
 
-	defer stream.Close()
+	if err != nil {
+		return
+	}
 
-	for stream.Next() && err == nil {
-		chunk := stream.Current()
+	defer func(stream *openai.ChatCompletionStream) {
+		err = errors.Join(
+			err,
+			stream.Close(),
+		)
+	}(stream)
 
+	for chunk, err := stream.Recv(); err == nil; chunk, err = stream.Recv() {
 		if len(chunk.Choices) > 0 {
 			_, err = writer.WriteString(chunk.Choices[0].Delta.Content)
 		}
 	}
 
-	if stream.Err() != nil {
-		err = errors.Join(err, stream.Err())
+	return
+}
+
+func NewParameters(seed *int, temperature *float32) (p RequestParams) {
+	if seed != nil {
+		p.Seed = seed
+	}
+	if temperature != nil {
+		p.Temperature = *temperature
 	}
 
 	return

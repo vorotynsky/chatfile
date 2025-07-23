@@ -11,12 +11,12 @@ import (
 type RunCmd struct {
 	File string `arg:"positional, required, help:open a specified file as a chatfile"`
 
-	Credentials OpenAICredentials
-
-	Temperature *float64 `arg:"--temperature" placeholder:"TEMP" help:"Temperature for the model (this option may be removed)"`
-	Seed        *int64   `arg:"--seed" placeholder:"SEED" help:"Random seed for reproducible model outputs (this option may be removed)"`
+	Temperature *float32 `arg:"--temperature" placeholder:"TEMP" help:"Temperature for the model (this option may be removed)"`
+	Seed        *int     `arg:"--seed" placeholder:"SEED" help:"Random seed for reproducible model outputs (this option may be removed)"`
 
 	ModelFiles map[string]string `arg:"--load-as-model,separate" placeholder:"MODEL=CHATFILE" help:"Load a file as a model with the specified name. The file will be read and parsed as a chatfile. The model name can be used in subsequent commands (such as FROM) to refer to the loaded model (this option may be removed)"`
+
+	OpenAICredentials
 }
 
 func (cmd RunCmd) Execute() {
@@ -38,7 +38,7 @@ func (cmd RunCmd) Execute() {
 
 	substituteModelFiles(cmd.ModelFiles, context)
 
-	client := createClient(cmd.Credentials)
+	client := createClient(cmd.OpenAICredentials)
 	parameters := chatfile.NewParameters(cmd.Seed, cmd.Temperature)
 
 	err = chatfile.Send(client, context.CurrentModel, history, os.Stdout, parameters)

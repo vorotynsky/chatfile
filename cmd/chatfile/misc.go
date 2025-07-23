@@ -5,8 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/openai/openai-go"
-	"github.com/openai/openai-go/option"
+	"github.com/sashabaranov/go-openai"
 	chatfile "github.com/vorotynsky/chatfile/lib"
 )
 
@@ -33,19 +32,17 @@ func loadChatfileIntoContext(file *os.File, context *chatfile.Context) error {
 	return scanner.Err()
 }
 
-func createClient(credentials OpenAICredentials) openai.Client {
-	options := []option.RequestOption{
-		option.WithAPIKey(credentials.APIKey),
-	}
+func createClient(credentials OpenAICredentials) *openai.Client {
+	config := openai.DefaultConfig(credentials.APIKey)
 
 	if credentials.BaseUrl != "" {
-		options = append(options, option.WithBaseURL(credentials.BaseUrl))
+		config.BaseURL = credentials.BaseUrl
 	}
 
 	if credentials.Project != "" {
-		options = append(options, option.WithProject(credentials.Project))
+		config.OrgID = credentials.Project
 	}
 
-	client := openai.NewClient(options...)
+	client := openai.NewClientWithConfig(config)
 	return client
 }
